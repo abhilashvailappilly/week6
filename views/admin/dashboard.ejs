@@ -1,0 +1,112 @@
+<%- include('../layouts/header')-%> <%- include('./navbar')-%>
+
+<div>
+  <h1 class="text-center">Admin dashboard</h1>
+  <!-- <br><h4 class="alter text-success text center" id="sucessMessage"><%=locals.message ?message:''%></h4> -->
+  <!-- <% if (locals.success && locals.success.length > 0) { %>
+    <div class="alert alert-success">
+      <%= locals.success[0] %>
+    </div>
+  <% } %> -->
+  <!-- <br><h4 class="alter text-success text center" id="sucessMessage"><%=locals.message ?message:''%></h4> -->
+<div class="d-flex justify-content-between">
+
+  <div>
+  <a href="/admin/newUser" ><button class="rounded m-3"  >Add New User</button></a>
+  </div>
+
+  <div class="">
+    <div>
+    <form action=""  class="form-outline d-flex m-2 p-3 ">
+      <input type="search" id="form1" class="form-control" name="search" />
+      
+      <input type="submit" class="m-2 btn rounded-3 btn-primary" value="Search"/>
+    </form>
+    </div>
+      <!-- <i class="fas fa-search"></i> -->
+   
+  </div>
+
+</div>
+  <!-- <p><%- users%></p> -->
+
+  <table class="table table-dark">
+    <tr>
+      <th class="th-dark">Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>is Admin</th>
+      <th>Actions</th>
+    </tr>
+    <% if(users.length > 0){
+         for(let i=0 ;i < users.length ; i++){ 
+    %>
+    <tr>
+      <td><%= users[i].name %></td>
+      <td><%= users[i].email %></td>
+      <td><%= users[i].mobile %></td>
+      <td><%= users[i].is_admin %></td>
+      <!-- <td><a href="/admin/editUser"><button class="rounded m-3">Edit</button></a> -->
+      <td><a href='/admin/editUser?id=<%-users[i].id-%>'><button class="rounded m-3">Edit</button></a>
+  <button class="rounded m-3" onclick="confirmDelete('<%= users[i].id %>')">Delete</button>
+</td>
+        <!-- <a href='/admin/deleteUser?id=<%-users[i].id-%>'><button class="rounded m-3">Delete</button></a></td> -->
+     <!-- Add a confirmation button for each user -->
+<!-- <td>
+  <a href='/admin/editUser?id=<%-users[i].id-%>'><button class="rounded m-3">Edit</button></a>
+</td> -->
+
+    </tr>
+
+    <% } } else{ %>
+    <tr>
+      Users Not Found
+    </tr>
+    <% } %>
+  </table>
+</div>
+
+<script>
+  // Function to display a confirmation dialog
+  function confirmDelete(userId) {
+    if (confirm("Are you sure you want to delete this user?")) {
+      // If the user confirms, navigate to the delete route
+      window.location.href = `/admin/deleteUser?id=${userId}`;
+    }
+  }
+
+  // Remove error message after 3 seconds
+  setTimeout(() => {
+    const errorMessage = document.getElementById('span');
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
+  }, 3000);
+
+  setTimeout(() => {
+    const successMessage = document.getElementById('sucessMessage');
+    if (successMessage) {
+      successMessage.style.display = 'none'; // Fixed the typo here
+    }
+  }, 3000);
+</script>
+
+<!-- <script>
+    // Remove error message after 3 seconds
+    setTimeout(() => {
+        const errorMessage = document.getElementById('span');
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+    }, 3000);
+    setTimeout(() => {
+        const sucessMessage = document.getElementById('sucessMessage');
+        if (sucessMessage) {
+            sucessMessage.style.display = 'none';
+        }
+    }, 3000);
+</script> -->
+
+
+
+<%- include('../layouts/footer')-%>
